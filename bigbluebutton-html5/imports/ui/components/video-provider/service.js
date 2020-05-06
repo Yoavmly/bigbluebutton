@@ -101,6 +101,7 @@ class VideoService {
           role: 1,
           emoji: 1,
           clientType: 1,
+          presenter: 1,
         },
       }).fetch();
 

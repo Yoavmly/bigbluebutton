@@ -42,7 +42,7 @@ const intlMessages = defineMessages({
 });
 
 const findOptimalGrid = (canvasWidth, canvasHeight, gutter, aspectRatio, numItems, columns = 1) => {
-  const rows = Math.ceil(numItems / columns);
+  const rows = Math.max(3, Math.ceil(numItems / columns));
   const gutterTotalWidth = (columns - 1) * gutter;
   const gutterTotalHeight = (rows - 1) * gutter;
   const usableWidth = canvasWidth - gutterTotalWidth;
@@ -127,6 +127,8 @@ class VideoList extends Component {
     // Has a focused item so we need +3 cells
     if (hasFocusedItem) {
       numItems += 3;
+    } else {
+      numItems += 8;
     }
     const optimalGrid = _.range(1, numItems + 1)
       .reduce((currentGrid, col) => {
@@ -213,7 +215,7 @@ class VideoList extends Component {
       enableVideoStats,
       swapLayout,
     } = this.props;
-    const { focusedId } = this.state;
+    const { focusedId, optimalGrid } = this.state;
 
     return users.map((user) => {
       const isFocused = focusedId === user.userId;
@@ -228,13 +230,34 @@ class VideoList extends Component {
         }];
       }
 
+      let style = {};
+      if (user.presenter) {
+        if (optimalGrid.rows === 3) {
+          style.gridRow = `1 / span 3`;
+        } else if (optimalGrid.rows >= 4 && optimalGrid.rows < 6) {
+          style.gridRow = `2 / span 3`;
+        } else if (optimalGrid.rows >= 6) {
+          style.gridRow = `3 / span 3`;
+        }
+
+        if (optimalGrid.columns === 3) {
+          style.gridColumn = `1 / span 3`;
+        } else if (optimalGrid.columns >= 4 && optimalGrid.columns < 6) {
+          style.gridColumn = `2 / span 3`;
+        } else if (optimalGrid.columns >= 6) {
+          style.gridColumn = `3 / span 3`;
+        }        
+    }
+
       return (
         <div
           key={user.userId}
           className={cx({
             [styles.videoListItem]: true,
+            [styles.presenter]: user.presenter,
             [styles.focused]: focusedId === user.userId && users.length > 2,
           })}
+          style={style}
         >
           <VideoListItemContainer
             numOfUsers={users.length}
