@@ -230,24 +230,24 @@ class VideoList extends Component {
         }];
       }
 
-      let style = {};
+      const style = {};
       if (user.presenter) {
         if (optimalGrid.rows === 3) {
-          style.gridRow = `1 / span 3`;
+          style.gridRow = '1 / span 3';
         } else if (optimalGrid.rows >= 4 && optimalGrid.rows < 6) {
-          style.gridRow = `2 / span 3`;
+          style.gridRow = '2 / span 3';
         } else if (optimalGrid.rows >= 6) {
-          style.gridRow = `3 / span 3`;
+          style.gridRow = '3 / span 3';
         }
 
         if (optimalGrid.columns === 3) {
-          style.gridColumn = `1 / span 3`;
+          style.gridColumn = '1 / span 3';
         } else if (optimalGrid.columns >= 4 && optimalGrid.columns < 6) {
-          style.gridColumn = `2 / span 3`;
+          style.gridColumn = '2 / span 3';
         } else if (optimalGrid.columns >= 6) {
-          style.gridColumn = `3 / span 3`;
-        }        
-    }
+          style.gridColumn = '3 / span 3';
+        }
+      }
 
       return (
         <div
