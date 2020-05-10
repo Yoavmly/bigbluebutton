@@ -4,9 +4,9 @@ public:
     desktopFontSize: 14px
     audioChatNotification: false
     autoJoin: true
-    listenOnlyMode: true
+    listenOnlyMode: false
     forceListenOnly: false
-    skipCheck: false
+    skipCheck: true
     clientTitle: BigBlueButton
     appName: BigBlueButton HTML5 Client
     bbbServerVersion: 2.2
@@ -85,7 +85,7 @@ public:
     enableNetworkMonitoring: false
     packetLostThreshold: 10
   kurento:
-    wsUrl: HOST
+    wsUrl: wss://bbb.mly.co.il/bbb-webrtc-sfu
     chromeDefaultExtensionKey: akgoaoikmbmhcopjgakkcepdgdgkjfbc
     chromeDefaultExtensionLink: https://chrome.google.com/webstore/detail/bigbluebutton-screenshare/akgoaoikmbmhcopjgakkcepdgdgkjfbc
     chromeExtensionKey: KEY
@@ -116,8 +116,8 @@ public:
     enableVideoStats: false
     enableVideoMenu: true
     enableListenOnly: true
-    autoShareWebcam: false
-    skipVideoPreview: false
+    autoShareWebcam: true
+    skipVideoPreview: true
   pingPong:
     clearUsersInSeconds: 180
     pongTimeInSeconds: 15
