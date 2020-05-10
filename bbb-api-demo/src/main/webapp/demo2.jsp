@@ -44,6 +44,15 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 %>
 
 <%@ include file="demo_header.jsp"%>
+MEETINGS:
+<%
+String meetings = getMeetings();
+
+
+Document doc = parseXml(meetings);
+NodeList meetingsList = doc.getElementsByTagName("meeting");
+
+%>
 
 <h2>Join Selected</h2>
 
@@ -71,11 +80,27 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 				&nbsp;
 			</td>
 			<td style="text-align: left ">
-			<select name="meetingID">
-				<option value="English 232">English 232</option>
-				<option value="English 300">English 300</option>
-				<option value="English 402">English 402</option>
-				<option value="Demo Meeting">Demo Meeting</option>
+			<select name="meetingID" multiple="multiple">
+				<!-- <option value="אורן">אורן</option>
+				<option value="ברוש">ברוש</option>
+				<option value="גזר">גזר</option>
+				<option value="דולב">דולב</option>
+				<option value="הדס">הדס</option>
+				<option value="ורד">ורד</option>
+				<option value="זית">זית</option>
+				<option value="חרוב">חרוב</option>
+				<option value="טיליה">טיליה</option>
+				<option value="יסמין">יסמין</option> -->
+				<%
+				for(int m=0; m<meetingsList.getLength(); m++) { Element meeting=(Element) meetingsList.item(m); String
+					meetingID=meeting.getElementsByTagName("meetingID").item(0).getTextContent(); String
+					meetingName=meeting.getElementsByTagName("meetingName").item(0).getTextContent(); 
+				%>
+				<option value="<%= meetingName %>"><%= meetingName %></option>
+					
+				
+					<% } %>
+
 			</select>				
 			</td>
 		</tr>
@@ -102,19 +127,24 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 
 		String username = request.getParameter("username");
 		String meetingID = request.getParameter("meetingID");
+		String meetingIDs[] = request.getParameterValues("meetingID");
 
+		for(int i=0; i<meetingIDs.length; i++)
+		{
 		// String joinURL = getJoinURL(username, meetingID, "Welcome to " + meetingID );
 		// Update: added record parameter, default false
 		String url = BigBlueButtonURL.replace("bigbluebutton/","demo/");
 		// String preUploadPDF = "<?xml version='1.0' encoding='UTF-8'?><modules><module name='presentation'><document url='"+url+"pdfs/sample.pdf'/></module></modules>";
 		// String joinURL = getJoinURL(username, meetingID, "false", "<br>Welcome to course: %%CONFNAME%%.<br>", null, preUploadPDF );
-		String joinURL = getJoinURL(username, meetingID, "false", null, null, null );
+		String joinURL = getJoinURL(username, meetingIDs[i], "false", null, null, null );
 
 		if (joinURL.startsWith("http://") || joinURL.startsWith("https://")) {
 %>
 
+
 <script language="javascript" type="text/javascript">
-  window.location.href="<%=joinURL%>";
+  //window.location.href="<%=joinURL%>";
+  window.open( "<%=joinURL%>");
 </script>
 
 <%
@@ -124,7 +154,8 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 Error: getJoinURL() failed
 <p /><%=joinURL%> <%
  	}
- 	}
+	 }
+	 }
  %> <%@ include file="demo_footer.jsp"%>
 </body>
 </html>
