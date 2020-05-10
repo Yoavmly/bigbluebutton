@@ -102,6 +102,7 @@ class VideoService {
           emoji: 1,
           clientType: 1,
           presenter: 1,
+          extId: 1,
         },
       }).fetch();
 
