@@ -217,7 +217,7 @@ class VideoList extends Component {
     } = this.props;
     const { focusedId, optimalGrid } = this.state;
 
-    const isThereBadran = users.some((user) => user.extId === "BADRAN");
+    const isThereBadran = users.some(user => user.extId === 'BADRAN');
 
     return users.map((user) => {
       const isFocused = focusedId === user.userId;
@@ -233,7 +233,7 @@ class VideoList extends Component {
       }
 
       const style = {};
-      if ((!isThereBadran && user.presenter) || user.extId === "BADRAN") {
+      if ((!isThereBadran && user.presenter) || user.extId === 'BADRAN') {
         if (optimalGrid.rows === 3) {
           style.gridRow = '1 / span 3';
         } else if (optimalGrid.rows >= 4 && optimalGrid.rows < 6) {
