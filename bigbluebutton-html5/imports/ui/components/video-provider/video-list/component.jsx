@@ -256,7 +256,6 @@ class VideoList extends Component {
           key={user.userId}
           className={cx({
             [styles.videoListItem]: true,
-            [styles.presenter]: user.presenter,
             [styles.focused]: focusedId === user.userId && users.length > 2,
           })}
           style={style}
